@@ -1,0 +1,28 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+  "source.fixAll": "always"
+  },
+  // Linting設定
+  "editor.rulers": [80],
+  "files.associations": {
+    "*.tf": "terraform",
+    "*.tfvars": "terraform",
+    "*.hcl": "terraform"
+  },
+  "search.exclude": {
+    "**/.terraform": true,
+    "**/*.tfstate": true,
+    "**/*.tfstate.backup": true,
+    "**/terraform.tfstate*": true,
+    "**/.terraform.lock.hcl": true
+  },
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+
+  "yaml.format.enable": true,
+  "yaml.format.bracketSpacing": true,
+  "yaml.validate": true,
+}
