@@ -11,9 +11,34 @@ permissions:
   pull-requests: write
 
 jobs:
+  # generate-matrix:
+  #   strategy:
+  #     matrix:
+  #       customers:
+  #         [
+  #           "develop-customer-specific-fixer",
+  #           "develop-customer-specific-hoge",
+  #           "develop-customer-specific-piyo",
+  #         ]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: a
+  #       shell: bash
+  #       run: |
+  #         echo "hello"
+
   all_update_customer_specific_infra:
+    strategy:
+      matrix:
+        customers:
+          [
+            "develop-customer-specific-fixer",
+            "develop-customer-specific-hoge",
+            "develop-customer-specific-piyo",
+          ]
     uses: ./.github/workflows/update-infra-plan.yaml
     with:
-      environment: "develop-customer-specific-fixer"
+      # environment: "develop-customer-specific-fixer"
+      environment: ${{ matrix.customers }}
     secrets:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS_DEVELOPMENT }}
