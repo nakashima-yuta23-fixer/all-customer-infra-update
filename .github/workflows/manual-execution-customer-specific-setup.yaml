@@ -41,6 +41,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           echo "ARM_SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .subscriptionId -r)" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .tenantId -r)" >> $GITHUB_ENV
 
       - name: Terragrunt run-all apply
         shell: bash
