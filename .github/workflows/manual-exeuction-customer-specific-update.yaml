@@ -13,5 +13,5 @@ permissions:
 jobs:
   all_update_customer_specific_infra:
     uses: ./.github/workflows/update-infra-plan.yaml
-    with:
-      environment: "develop-customer-specific-fixer"
+    # with:
+    #   environment: "develop-customer-specific-fixer"

@@ -1,15 +1,17 @@
 # called by update-infra-plan.yaml
 on:
   workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
+    # inputs:
+    #   environment:
+    #     required: true
+    #     type: string
+    # secrets: inherit
 
 jobs:
   called_job:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    # environment: ${{ inputs.environment }}
+    environment: "develop-customer-specific-fixer"
     steps:
       - name: Check out repository ${{ github.repository }}
         uses: actions/checkout@v4
