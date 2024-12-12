@@ -1,0 +1,22 @@
+# # こちらは手動実行で、環境を作成
+
+name: manual exection customer specific update
+run-name: all update customer specific infra run by ${{ github.actor }}
+
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  all_update_customer_specific_infraW:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository ${{ github.repository }}
+        uses: actions/checkout@v4
+
+      - name: call a update pipeline
+        uses: ./.github/workflows/update-infra-plan.yml

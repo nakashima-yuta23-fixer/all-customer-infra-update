@@ -1,0 +1,12 @@
+# called by update-infra-plan.yaml
+name: update infra plan
+
+on:
+  workflow_call:
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print hello
+        run: echo "hello"
