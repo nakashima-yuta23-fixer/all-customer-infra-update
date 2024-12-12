@@ -1,6 +1,6 @@
 # こちらは手動実行で、環境を作成
 
-name: Pull request trigger
+name: manual exection main
 run-name: develop CI run by ${{ github.actor }}
 
 on:

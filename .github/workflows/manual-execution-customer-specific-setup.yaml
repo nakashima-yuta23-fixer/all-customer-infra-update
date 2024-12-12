@@ -1,4 +1,4 @@
-name: Pull request trigger
+name: manual execution customer specific setup
 run-name: develop CI run by ${{ github.actor }}
 
 on:
