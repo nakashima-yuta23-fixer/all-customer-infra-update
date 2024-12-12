@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   manural-execution-customer-specific-setup:
-    environment: develop-customer-specific-piyo
+    environment: develop-customer-specific-fixer
     runs-on: ubuntu-latest
 
     steps:
