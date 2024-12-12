@@ -8,7 +8,6 @@ locals {
   terraform_version            = get_env("TERRAFORM_VERSION")
   backend_resource_group_name  = get_env("TERRAFORM_BACKEND_RESOURCE_GROUP_NAME")
   backend_storage_account_name = get_env("TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME")
-  backend_container_name       = get_env("TERRAFORM_BACKEND_CONTAINER_NAME")
 }
 
 remote_state {
