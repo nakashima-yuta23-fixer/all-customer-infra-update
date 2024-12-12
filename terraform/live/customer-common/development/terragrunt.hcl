@@ -53,7 +53,7 @@ EOF
 }
 
 generate "provider" {
-  path      = "provider.tf"
+  path      = "providers.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "azurerm" {
