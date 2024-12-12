@@ -1,22 +1,19 @@
 # called by update-infra-plan.yaml
 on:
   workflow_call:
-    # inputs:
-    #   environment:
-    #     required: true
-    #     type: string
-    # secrets: inherit
-
-permissions:
-  contents: read
-  id-token: write
-  deployments: none
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
 
 jobs:
   called_job:
     runs-on: ubuntu-latest
-    # environment: ${{ inputs.environment }}
-    environment: develop-customer-specific-fixer
+    environment: ${{ inputs.environment }}
+    # environment: develop-customer-specific-fixer
     steps:
       - name: Check out repository ${{ github.repository }}
         uses: actions/checkout@v4
@@ -34,12 +31,6 @@ jobs:
           terragrunt --version
         env:
           TG_VERSION: "0.69.9"
-
-      - name: show secret
-        shell: bash
-        run: |
-          echo "${{ secrets.AZURE_CREDENTIALS }}"
-          echo "${{ vars.TF_VAR_location }}"
 
       - name: Log in with Azure
         uses: azure/login@v2
