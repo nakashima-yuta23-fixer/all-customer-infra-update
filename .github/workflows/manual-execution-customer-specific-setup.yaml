@@ -15,8 +15,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  pull_request-triger:
-    environment: ${ inputs.environment }
+  manural-execution-customer-specific-setup:
+    environment: ${ github.event.inputs.environment }
     runs-on: ubuntu-latest
 
     steps:
