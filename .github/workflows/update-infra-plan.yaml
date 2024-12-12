@@ -1,6 +1,4 @@
 # called by update-infra-plan.yaml
-name: update infra plan
-
 on:
   workflow_call:
 
