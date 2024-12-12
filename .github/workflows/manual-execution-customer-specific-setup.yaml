@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   manural-execution-customer-specific-setup:
-    environment: develop-customer-specific-fixer
+    environment: develop-customer-specific-hoge
     runs-on: ubuntu-latest
 
     steps:
