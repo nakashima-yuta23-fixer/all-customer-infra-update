@@ -71,7 +71,6 @@ jobs:
           echo "TERRAGRUNT_VERSION=$(cat .terragrunt-version)" >> $GITHUB_ENV
           echo "TERRAFORM_BACKEND_RESOURCE_GROUP_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendResourceGroupName -r)" >> $GITHUB_ENV
           echo "TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendStorageAccountName -r)" >> $GITHUB_ENV
-          echo "TERRAFORM_BACKEND_CONTAINER_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendContainerName -r)" >> $GITHUB_ENV
           echo "TF_VAR_product_name=${{ vars.TF_VAR_PRODUCT_NAME }}" >> $GITHUB_ENV
           echo "TF_VAR_location=${{ vars.TF_VAR_LOCATION }}" >> $GITHUB_ENV
           echo "TF_VAR_env=${{ vars.TF_VAR_ENV }}" >> $GITHUB_ENV
