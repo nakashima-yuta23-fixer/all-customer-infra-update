@@ -10,7 +10,7 @@ on:
 permissions:
   contents: read
   id-token: write
-  deployments: write
+  deployments: none
 
 jobs:
   called_job:
