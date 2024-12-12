@@ -1,13 +1,7 @@
 name: manual execution customer specific setup
 run-name: develop CI run by ${{ github.actor }}
 
-on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "Environment to run"
-        type: environment
-        required: true
+on: workflow_dispatch
 
 permissions:
   id-token: write
@@ -16,7 +10,7 @@ permissions:
 
 jobs:
   manural-execution-customer-specific-setup:
-    environment: ${ github.event.inputs.environment }
+    environment: develop-customer-specific-fixer
     runs-on: ubuntu-latest
 
     steps:
