@@ -1,87 +1,87 @@
-name: Pull request trigger
-run-name: develop CI run by ${{ github.actor }}
+# name: Pull request trigger
+# run-name: develop CI run by ${{ github.actor }}
 
-on:
-  pull_request:
-    branches:
-      # ! ブランチ戦略に従って変更する必要あり(リストに追加したブランチに対しての操作がトリガーとなる)
-      - main
-      - develop
-      - feature/*
-      - renovate/*
-    types:
-      - opened
-      - synchronize
-    paths:
-      # ! Terraformのディレクトリ構成に従って変更する必要あり
-      - terraform/live/customer-common/development
-      - terraform/live/customer-specific/development
+# on:
+#   pull_request:
+#     branches:
+#       # ! ブランチ戦略に従って変更する必要あり(リストに追加したブランチに対しての操作がトリガーとなる)
+#       - main
+#       - develop
+#       - feature/*
+#       - renovate/*
+#     types:
+#       - opened
+#       - synchronize
+#     paths:
+#       # ! Terraformのディレクトリ構成に従って変更する必要あり
+#       - terraform/live/customer-common/development
+#       - terraform/live/customer-specific/development
 
-permissions:
-  id-token: write
-  contents: read
-  pull-requests: write
+# permissions:
+#   id-token: write
+#   contents: read
+#   pull-requests: write
 
-jobs:
-  pull_request-triger:
-    environment: development
-    runs-on: ubuntu-latest
+# jobs:
+#   pull_request-triger:
+#     environment: development
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Check out repository ${{ github.repository }}
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Check out repository ${{ github.repository }}
+#         uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.10.1"
+#       - name: Setup Terraform
+#         uses: hashicorp/setup-terraform@v3
+#         with:
+#           terraform_version: "1.10.1"
 
-      - name: Setup Terragrunt
-        shell: bash
-        run: |
-          wget "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64" -O /usr/local/bin/terragrunt -q
-          chmod +x /usr/local/bin/terragrunt
-          terragrunt --version
-        env:
-          TG_VERSION: "0.69.9"
+#       - name: Setup Terragrunt
+#         shell: bash
+#         run: |
+#           wget "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64" -O /usr/local/bin/terragrunt -q
+#           chmod +x /usr/local/bin/terragrunt
+#           terragrunt --version
+#         env:
+#           TG_VERSION: "0.69.9"
 
-      - name: Setup tfcmt
-        shell: bash
-        run: |
-          wget "https://github.com/suzuki-shunsuke/tfcmt/releases/download/v${TFCMT_VERSION}/tfcmt_linux_amd64.tar.gz" -O /tmp/tfcmt.tar.gz -q
-          tar xzf /tmp/tfcmt.tar.gz -C /tmp
-          mv /tmp/tfcmt /usr/local/bin
-          tfcmt --version
-        env:
-          TFCMT_VERSION: "4.13.0"
+#       - name: Setup tfcmt
+#         shell: bash
+#         run: |
+#           wget "https://github.com/suzuki-shunsuke/tfcmt/releases/download/v${TFCMT_VERSION}/tfcmt_linux_amd64.tar.gz" -O /tmp/tfcmt.tar.gz -q
+#           tar xzf /tmp/tfcmt.tar.gz -C /tmp
+#           mv /tmp/tfcmt /usr/local/bin
+#           tfcmt --version
+#         env:
+#           TFCMT_VERSION: "4.13.0"
 
-      - name: Log in with Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#       - name: Log in with Azure
+#         uses: azure/login@v2
+#         with:
+#           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set env used by Terraform
-        shell: bash
-        run: |
-          cd $GITHUB_WORKSPACE
-          echo "ARM_SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .subscriptionId -r)" >> $GITHUB_ENV
-          echo "ARM_TENANT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .tenantId -r)" >> $GITHUB_ENV
-          echo "ARM_CLIENT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientId -r)" >> $GITHUB_ENV
-          echo "ARM_CLIENT_SECRET=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientSecret -r)" >> $GITHUB_ENV
-          echo "TERRAFORM_VERSION=$(cat .terraform-version)" >> $GITHUB_ENV
-          echo "TERRAGRUNT_VERSION=$(cat .terragrunt-version)" >> $GITHUB_ENV
-          echo "TERRAFORM_BACKEND_RESOURCE_GROUP_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendResourceGroupName -r)" >> $GITHUB_ENV
-          echo "TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendStorageAccountName -r)" >> $GITHUB_ENV
-          echo "TF_VAR_product_name=${{ vars.TF_VAR_PRODUCT_NAME }}" >> $GITHUB_ENV
-          echo "TF_VAR_location=${{ vars.TF_VAR_LOCATION }}" >> $GITHUB_ENV
-          echo "TF_VAR_region_code=${{ vars.TF_VAR_REGION_CODE }}" >> $GITHUB_ENV
+#       - name: Set env used by Terraform
+#         shell: bash
+#         run: |
+#           cd $GITHUB_WORKSPACE
+#           echo "ARM_SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .subscriptionId -r)" >> $GITHUB_ENV
+#           echo "ARM_TENANT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .tenantId -r)" >> $GITHUB_ENV
+#           echo "ARM_CLIENT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientId -r)" >> $GITHUB_ENV
+#           echo "ARM_CLIENT_SECRET=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientSecret -r)" >> $GITHUB_ENV
+#           echo "TERRAFORM_VERSION=$(cat .terraform-version)" >> $GITHUB_ENV
+#           echo "TERRAGRUNT_VERSION=$(cat .terragrunt-version)" >> $GITHUB_ENV
+#           echo "TERRAFORM_BACKEND_RESOURCE_GROUP_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendResourceGroupName -r)" >> $GITHUB_ENV
+#           echo "TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendStorageAccountName -r)" >> $GITHUB_ENV
+#           echo "TF_VAR_product_name=${{ vars.TF_VAR_PRODUCT_NAME }}" >> $GITHUB_ENV
+#           echo "TF_VAR_location=${{ vars.TF_VAR_LOCATION }}" >> $GITHUB_ENV
+#           echo "TF_VAR_region_code=${{ vars.TF_VAR_REGION_CODE }}" >> $GITHUB_ENV
 
-      - name: Terragrunt run-all plan
-        shell: bash
-        # ! ↓ cdコマンドで移動する先に開発用のTerraformのルートterragrunt.hclがある場所に移動する必要がある
-        run: |
-          cd $GITHUB_WORKSPACE/terraform
-          chmod +x $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
-          terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Terragrunt run-all plan
+#         shell: bash
+#         # ! ↓ cdコマンドで移動する先に開発用のTerraformのルートterragrunt.hclがある場所に移動する必要がある
+#         run: |
+#           cd $GITHUB_WORKSPACE/terraform
+#           chmod +x $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
+#           terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
