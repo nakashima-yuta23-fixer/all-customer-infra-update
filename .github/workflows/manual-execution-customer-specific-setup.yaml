@@ -40,10 +40,6 @@ jobs:
         shell: bash
         run: |
           cd $GITHUB_WORKSPACE
-          # echo "ARM_SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .subscriptionId -r)" >> $GITHUB_ENV
-          # echo "ARM_TENANT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .tenantId -r)" >> $GITHUB_ENV
-          # echo "ARM_CLIENT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientId -r)" >> $GITHUB_ENV
-          # echo "ARM_CLIENT_SECRET=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientSecret -r)" >> $GITHUB_ENV
           echo "TERRAFORM_VERSION=$(cat .terraform-version)" >> $GITHUB_ENV
           echo "TERRAGRUNT_VERSION=$(cat .terragrunt-version)" >> $GITHUB_ENV
           echo "TERRAFORM_BACKEND_RESOURCE_GROUP_NAME=$(echo '${{ vars.TERRAFORM_BACKEND_CONFIG }}' | jq .terraformBackendResourceGroupName -r)" >> $GITHUB_ENV
@@ -51,11 +47,11 @@ jobs:
           echo "TF_VAR_customer_name=${{ vars.TF_VAR_CUSTOMER_NAME }}" >> $GITHUB_ENV
           echo "TF_VAR_location=${{ vars.TF_VAR_LOCATION }}" >> $GITHUB_ENV
           echo "TF_VAR_region_code=${{ vars.TF_VAR_REGION_CODE }}" >> $GITHUB_ENV
-          # echo "$TERRAFORM_BACKEND_RESOURCE_GROUP_NAME"
-          # echo "$TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME"
-          # echo "$TF_VAR_customer_name"
-          # echo "$TF_VAR_location"
-          # echo "$TF_VAR_region_code"
+          echo "$TERRAFORM_BACKEND_RESOURCE_GROUP_NAME"
+          echo "$TERRAFORM_BACKEND_STORAGE_ACCOUNT_NAME"
+          echo "$TF_VAR_customer_name"
+          echo "$TF_VAR_location"
+          echo "$TF_VAR_region_code"
 
       - name: Terragrunt run-all apply
         shell: bash
