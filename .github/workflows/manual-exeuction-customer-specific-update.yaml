@@ -15,3 +15,5 @@ jobs:
     uses: ./.github/workflows/update-infra-plan.yaml
     with:
       environment: "develop-customer-specific-fixer"
+    secrets:
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS_DEVELOPMENT }}
