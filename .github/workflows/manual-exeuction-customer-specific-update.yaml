@@ -41,9 +41,9 @@ jobs:
       matrix:
         customers:
           [
-            "develop-customer-specific-fixer",
-            "develop-customer-specific-hoge",
-            "develop-customer-specific-piyo",
+            "develop-customer-specific-fixer-required-approval",
+            "develop-customer-specific-hoge-required-approval",
+            "develop-customer-specific-piyo-required-approval",
           ]
     uses: ./.github/workflows/update-infra-apply.yaml
     with:
