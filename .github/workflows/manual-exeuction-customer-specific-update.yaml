@@ -19,16 +19,25 @@ jobs:
         shell: bash
         run: echo "approval."
 
-  all_update_customer_specific_infra_plan:
+  set-matrix:
     needs: manual-approval
+    runs-on: ubuntu-24.04
+    outputs:
+      customers: ${{ steps.set-matrix.outputs.value }}
+    steps:
+      - name: set matrix
+        id: set-matrix
+        run: |
+          echo '["develop-customer-specific-fixer","develop-customer-specific-hoge","develop-customer-specific-piyo"]' | jq -c
+          customers=$(echo '["develop-customer-specific-fixer","develop-customer-specific-hoge","develop-customer-specific-piyo"]' | jq -c)
+          echo "value=${customers}" >> $GITHUB_OUTPUT
+
+  all_update_customer_specific_infra_plan:
+    needs: set-matrix
     strategy:
+      fail-fast: false
       matrix:
-        customers:
-          [
-            "develop-customer-specific-fixer",
-            "develop-customer-specific-hoge",
-            "develop-customer-specific-piyo",
-          ]
+        customers: ${{ fromJson(needs.set-matrix.outputs.customers) }}
     uses: ./.github/workflows/update-infra-plan.yaml
     with:
       environment: ${{ matrix.customers }}
