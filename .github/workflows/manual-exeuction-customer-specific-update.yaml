@@ -12,10 +12,10 @@ permissions:
 
 jobs:
   manual-approval:
-    environment: hello
+    environment: manual-approval
     runs-on: ubuntu-24.04
     steps:
-      - name: hello
+      - name: manual approval
         shell: bash
         run: echo "approval."
 
