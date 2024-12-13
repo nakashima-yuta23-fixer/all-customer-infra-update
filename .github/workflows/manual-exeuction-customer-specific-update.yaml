@@ -11,7 +11,16 @@ permissions:
   pull-requests: write
 
 jobs:
+  manual-approval:
+    environment: hello
+    runs-on: ubuntu-latest
+    steps:
+      - name: hello
+        shell: bash
+        run: echo "approval."
+
   all_update_customer_specific_infra_plan:
+    needs: manual-approval
     strategy:
       matrix:
         customers:
