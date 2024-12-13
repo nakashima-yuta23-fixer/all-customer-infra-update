@@ -1,4 +1,4 @@
-# # こちらは手動実行で、環境を作成
+# # こちらは手動実行で、環境を更新
 
 name: manual exection customer specific update
 run-name: all update customer specific infra run by ${{ github.actor }}
