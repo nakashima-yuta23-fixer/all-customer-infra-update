@@ -20,7 +20,7 @@ jobs:
         run: echo "approval."
 
   set-matrix:
-    needs: manual-approval
+    needs: [manual-approval]
     runs-on: ubuntu-24.04
     outputs:
       customers: ${{ steps.set-matrix.outputs.value }}
@@ -33,7 +33,7 @@ jobs:
           echo "value=${customers}" >> $GITHUB_OUTPUT
 
   all_update_customer_specific_infra_plan:
-    needs: set-matrix
+    needs: [set-matrix]
     strategy:
       fail-fast: false
       matrix:
@@ -45,7 +45,7 @@ jobs:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS_DEVELOPMENT }}
 
   all_update_customer_specific_infra_apply:
-    needs: all_update_customer_specific_infra_plan
+    needs: [all_update_customer_specific_infra_plan]
     strategy:
       matrix:
         customers:
